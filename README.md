@@ -2,7 +2,7 @@
 
 一个简洁高效的文本转SQL引号格式工具，支持批量处理多行文本。
 
-![SQL Quote Tool](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![SQL Quote Tool](https://img.shields.io/badge/version-1.1.0-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Language](https://img.shields.io/badge/language-JavaScript-yellow.svg)
 
@@ -11,7 +11,7 @@
 - 🚀 **批量转换** - 支持多行文本一次性转换
 - 💎 **Material Design** - 现代化美观的用户界面
 - 📱 **响应式设计** - 完美支持桌面、平板和手机
-- 📋 **一键复制** - 快速复制转换结果到剪贴板
+- 📋 **自动复制** - 转换完成后自动复制结果到剪贴板
 - ⚡ **实时统计** - 显示行数、字符数等统计信息
 - 🛡️ **安全防护** - 内置XSS防护和SQL注入预防
 - ♿ **无障碍支持** - 符合WCAG可访问性标准
@@ -28,13 +28,13 @@
 
 ### 在线使用
 
-访问 [SQL Quote Tool](https://your-username.github.io/it-tools/) 立即开始使用。
+访问 [SQL Quote Tool](https://awaken233.github.io/it-tools/) 立即开始使用。
 
 ### 本地部署
 
 1. **克隆仓库**
    ```bash
-   git clone https://github.com/your-username/it-tools.git
+   git clone https://github.com/awaken233/it-tools.git
    cd it-tools
    ```
 
@@ -66,14 +66,14 @@
    odb581ek021PSWpPuA0GNFlqON0g
    ```
 
-2. **点击"Convert to SQL"按钮**
+2. **点击"📋 Convert & Copy"按钮**
 
-3. **获得结果**
+3. **获得结果并自动复制**
    ```sql
    'odb581Wb5zJ2dUqRaS9OpJwps6Rw','odb581cB0lSbJkWgKAxpXrrnmBO4','odb581ek021PSWpPuA0GNFlqON0g'
    ```
-
-4. **一键复制** - 点击"📋 Copy Result"按钮
+   
+   结果会自动复制到剪贴板，无需额外操作！
 
 ### 高级功能
 
@@ -202,17 +202,23 @@ SELECT * FROM orders WHERE customer_id IN ('odb581Wb5zJ2dUqRaS9OpJwps6Rw','odb58
 
 ## 📝 更新日志
 
+### v1.1.0 (2025-06-19)
+- 🚀 **重大改进**: Convert按钮现在自动复制结果到剪贴板
+- 🎯 **UI优化**: 移除单独的Copy按钮，简化操作流程
+- 📋 **用户体验**: 一键转换并复制，提升效率
+- 📄 **许可证**: 添加MIT许可证文件
+
 ### v1.0.0 (2025-06-19)
 - ✨ 初始版本发布
 - 🎨 Material Design UI设计
 - 📱 响应式设计支持
 - 🔒 安全防护机制
 - ♿ 无障碍支持
-- 📋 一键复制功能
+- 📋 基础复制功能
 
 ## 📄 许可证
 
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+本项目采用 [MIT 许可证](LICENSE) - 查看详情了解使用条款。
 
 ## 🙋‍♂️ 常见问题
 
@@ -226,12 +232,12 @@ A: 建议限制在100KB以内，超过1000行可能影响性能。
 A: 是的，下载到本地后可以完全离线使用。
 
 ### Q: 如何报告问题？
-A: 请在 [GitHub Issues](https://github.com/your-username/it-tools/issues) 中提交问题。
+A: 请在 [GitHub Issues](https://github.com/awaken233/it-tools/issues) 中提交问题。
 
 ## 📞 联系方式
 
-- GitHub: [@your-username](https://github.com/your-username)
-- Issues: [项目Issues](https://github.com/your-username/it-tools/issues)
+- GitHub: [@awaken233](https://github.com/awaken233)
+- Issues: [项目Issues](https://github.com/awaken233/it-tools/issues)
 
 ---
 

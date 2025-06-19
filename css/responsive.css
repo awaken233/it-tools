@@ -123,9 +123,7 @@
     max-width: 300px;
   }
   
-  .btn-copy {
-    margin-top: var(--spacing-sm);
-  }
+
   
   .notification {
     top: var(--spacing-sm);
@@ -243,7 +241,6 @@
   }
   
   .actions,
-  .btn-copy,
   .notification,
   .app-footer {
     display: none !important;

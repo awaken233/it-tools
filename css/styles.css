@@ -256,35 +256,7 @@ button {
   box-shadow: var(--shadow-1);
 }
 
-/* Copy Button */
-.btn-copy {
-  background-color: var(--accent-color);
-  color: var(--on-surface);
-  box-shadow: var(--shadow-1);
-  margin-top: var(--spacing-md);
-  width: 100%;
-}
 
-.btn-copy:hover:not(:disabled) {
-  background-color: var(--accent-dark);
-  color: white;
-  box-shadow: var(--shadow-2);
-  transform: translateY(-1px);
-}
-
-.btn-copy:active {
-  transform: translateY(0);
-  box-shadow: var(--shadow-1);
-}
-
-.btn-copy:disabled,
-.btn-copy.disabled {
-  background-color: var(--outline);
-  color: var(--on-surface-variant);
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
 
 /* Button Loading State */
 .loading::after {

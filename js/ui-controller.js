@@ -35,7 +35,6 @@ class UIController {
             outputText: document.getElementById('output-text'),
             convertBtn: document.getElementById('convert-btn'),
             clearBtn: document.getElementById('clear-btn'),
-            copyBtn: document.getElementById('copy-btn'),
             inputStats: document.getElementById('input-stats'),
             notification: document.getElementById('notification')
         };
@@ -55,10 +54,7 @@ class UIController {
             this.handleClear();
         });
 
-        // 复制按钮点击事件
-        this.elements.copyBtn.addEventListener('click', () => {
-            this.handleCopy();
-        });
+        // 移除复制按钮相关事件绑定
 
         // 输入框内容变化事件 (防抖处理)
         let inputTimer;
@@ -93,9 +89,6 @@ class UIController {
         // 设置初始统计信息
         this.updateStats('');
         
-        // 设置复制按钮初始状态
-        this.updateCopyButton(false);
-        
         // 聚焦到输入框
         this.elements.inputText.focus();
     }
@@ -103,7 +96,7 @@ class UIController {
     /**
      * 处理转换操作
      */
-    static handleConvert() {
+    static async handleConvert() {
         const inputText = this.elements.inputText.value;
         
         // 显示转换中状态
@@ -116,8 +109,9 @@ class UIController {
             if (result.success) {
                 // 显示转换结果
                 this.elements.outputText.value = result.result;
-                this.updateCopyButton(true);
-                this.showNotification('转换成功！', 'success');
+                
+                // 自动复制到剪贴板
+                await this.copyToClipboard(result.result);
                 
                 // 更新统计信息
                 this.updateStats(inputText);
@@ -125,14 +119,12 @@ class UIController {
             } else {
                 // 显示错误信息
                 this.elements.outputText.value = '';
-                this.updateCopyButton(false);
                 this.showNotification(result.error, 'error');
             }
             
         } catch (error) {
             // 处理未预期的错误
             this.elements.outputText.value = '';
-            this.updateCopyButton(false);
             this.showNotification('转换失败：' + error.message, 'error');
             console.error('Conversion error:', error);
         }
@@ -158,7 +150,6 @@ class UIController {
         
         // 更新UI状态
         this.updateStats('');
-        this.updateCopyButton(false);
         
         // 聚焦到输入框
         this.elements.inputText.focus();
@@ -166,33 +157,7 @@ class UIController {
         this.showNotification('已清空所有内容', 'info');
     }
 
-    /**
-     * 处理复制操作
-     */
-    static async handleCopy() {
-        const outputText = this.elements.outputText.value;
-        
-        if (!outputText.trim()) {
-            this.showNotification('没有内容可复制', 'warning');
-            return;
-        }
 
-        try {
-            // 检查剪贴板API支持
-            if (TextProcessor.isClipboardSupported()) {
-                // 使用现代剪贴板API
-                await navigator.clipboard.writeText(outputText);
-                this.showNotification('已复制到剪贴板！', 'success');
-            } else {
-                // 降级方案：使用传统方法
-                this.fallbackCopy(outputText);
-            }
-            
-        } catch (error) {
-            // 如果现代API失败，使用降级方案
-            this.fallbackCopy(outputText);
-        }
-    }
 
     /**
      * 降级复制方案
@@ -212,10 +177,10 @@ class UIController {
             document.execCommand('copy');
             document.body.removeChild(textarea);
             
-            this.showNotification('已复制到剪贴板！', 'success');
+            this.showNotification('转换成功并已复制到剪贴板！', 'success');
             
         } catch (error) {
-            this.showNotification('复制失败，请手动复制', 'error');
+            this.showNotification('转换成功，但复制失败，请手动复制', 'warning');
             // 全选输出文本作为备选方案
             this.elements.outputText.select();
         }
@@ -231,7 +196,6 @@ class UIController {
         // 如果输入为空，清空输出
         if (!inputText.trim()) {
             this.elements.outputText.value = '';
-            this.updateCopyButton(false);
         }
     }
 
@@ -246,12 +210,30 @@ class UIController {
     }
 
     /**
-     * 更新复制按钮状态
-     * @param {boolean} enabled - 是否启用
+     * 复制文本到剪贴板的通用方法
+     * @param {string} text - 要复制的文本
      */
-    static updateCopyButton(enabled) {
-        this.elements.copyBtn.disabled = !enabled;
-        this.elements.copyBtn.classList.toggle('disabled', !enabled);
+    static async copyToClipboard(text) {
+        if (!text.trim()) {
+            this.showNotification('没有内容可复制', 'warning');
+            return;
+        }
+
+        try {
+            // 检查剪贴板API支持
+            if (TextProcessor.isClipboardSupported()) {
+                // 使用现代剪贴板API
+                await navigator.clipboard.writeText(text);
+                this.showNotification('转换成功并已复制到剪贴板！', 'success');
+            } else {
+                // 降级方案：使用传统方法
+                this.fallbackCopy(text);
+            }
+            
+        } catch (error) {
+            // 如果现代API失败，使用降级方案
+            this.fallbackCopy(text);
+        }
     }
 
     /**
@@ -260,7 +242,7 @@ class UIController {
      */
     static setConvertButtonState(isLoading) {
         this.elements.convertBtn.disabled = isLoading;
-        this.elements.convertBtn.textContent = isLoading ? '转换中...' : 'Convert to SQL';
+        this.elements.convertBtn.textContent = isLoading ? '转换中...' : '📋 Convert & Copy';
         this.elements.convertBtn.classList.toggle('loading', isLoading);
     }
 
