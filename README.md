@@ -156,22 +156,31 @@ SELECT * FROM orders WHERE customer_id IN ('odb581Wb5zJ2dUqRaS9OpJwps6Rw','odb58
 }
 ```
 
-## 🧪 测试
+## 🧪 本地测试指南
 
-### 功能测试
+### 启动本地服务器
+
+在项目根目录 `it-tools` 下运行以下命令之一：
+
+```bash
+# 方法1：Python 内置服务器（推荐）
+python3 -m http.server 8000
+
+# 方法2：Node.js http-server
+npx http-server
+
+# 方法3：使用 Live Server（VSCode扩展）
+# 在 VSCode 中右键 index.html，选择 "Open with Live Server"
+```
+
+然后在浏览器中访问：`http://localhost:8000`
+
 
 应用内置自检功能，打开浏览器控制台可查看测试结果：
 
 - TextProcessor 核心功能测试
 - UI 元素完整性检查  
 - 浏览器兼容性检测
-
-### 手动测试
-
-- **基本功能**: 输入 → 转换 → 复制
-- **边界条件**: 空输入、特殊字符、大量数据
-- **响应式**: 不同设备和屏幕尺寸
-- **可访问性**: 键盘导航、屏幕阅读器
 
 ## 📱 浏览器支持
 
