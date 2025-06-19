@@ -309,18 +309,69 @@ class UIController {
      */
     static showNotification(message, type = 'info') {
         const notification = this.elements.notification;
+        const notificationText = document.getElementById('notification-text');
+        const iconContainer = notification.querySelector('.w-8');
         
-        // 清除之前的类
-        notification.className = 'notification';
+        // 设置消息内容
+        if (notificationText) {
+            notificationText.textContent = message;
+        } else {
+            notification.textContent = message;
+        }
         
-        // 设置消息内容和类型
-        notification.textContent = message;
-        notification.classList.add('show', type);
+        // 设置图标和颜色
+        const typeConfig = {
+            success: {
+                icon: '✅',
+                bgColor: 'bg-green-100',
+                textColor: 'text-green-800',
+                iconBg: 'bg-green-500'
+            },
+            error: {
+                icon: '❌',
+                bgColor: 'bg-red-100',
+                textColor: 'text-red-800',
+                iconBg: 'bg-red-500'
+            },
+            warning: {
+                icon: '⚠️',
+                bgColor: 'bg-yellow-100',
+                textColor: 'text-yellow-800',
+                iconBg: 'bg-yellow-500'
+            },
+            info: {
+                icon: 'ℹ️',
+                bgColor: 'bg-blue-100',
+                textColor: 'text-blue-800',
+                iconBg: 'bg-blue-500'
+            }
+        };
+        
+        const config = typeConfig[type] || typeConfig.info;
+        
+        // 更新图标
+        if (iconContainer) {
+            iconContainer.className = `w-8 h-8 rounded-full flex items-center justify-center ${config.iconBg}`;
+            iconContainer.textContent = config.icon;
+        }
+        
+        // 更新样式
+        const notificationCard = notification.querySelector('.bg-white');
+        if (notificationCard) {
+            notificationCard.className = `${config.bgColor} rounded-xl shadow-2xl border border-gray-200 p-4 flex items-center space-x-3`;
+        }
+        
+        if (notificationText) {
+            notificationText.className = `text-sm font-medium ${config.textColor}`;
+        }
+        
+        // 显示通知（移除 translate-x-full 和 opacity-0）
+        notification.className = notification.className.replace('translate-x-full opacity-0', 'translate-x-0 opacity-100');
         
         // 自动隐藏通知
         clearTimeout(this.notificationTimer);
         this.notificationTimer = setTimeout(() => {
-            notification.classList.remove('show');
+            notification.className = notification.className.replace('translate-x-0 opacity-100', 'translate-x-full opacity-0');
         }, 3000);
     }
 } 
