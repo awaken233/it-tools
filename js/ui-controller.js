@@ -34,6 +34,7 @@ class UIController {
             inputText: document.getElementById('input-text'),
             outputText: document.getElementById('output-text'),
             convertBtn: document.getElementById('convert-btn'),
+            plainJoinBtn: document.getElementById('plain-join-btn'),
             clearBtn: document.getElementById('clear-btn'),
             inputStats: document.getElementById('input-stats'),
             notification: document.getElementById('notification')
@@ -44,11 +45,16 @@ class UIController {
      * 绑定所有事件监听器
      */
     static bindEvents() {
-        // 转换按钮点击事件
+                // 转换按钮点击事件
         this.elements.convertBtn.addEventListener('click', () => {
             this.handleConvert();
         });
-
+        
+        // 纯文本合并按钮点击事件
+        this.elements.plainJoinBtn.addEventListener('click', () => {
+            this.handlePlainJoin();
+        });
+        
         // 清空按钮点击事件
         this.elements.clearBtn.addEventListener('click', () => {
             this.handleClear();
@@ -131,6 +137,46 @@ class UIController {
         
         // 恢复按钮状态
         this.setConvertButtonState(false);
+    }
+
+    /**
+     * 处理纯文本合并操作
+     */
+    static async handlePlainJoin() {
+        const inputText = this.elements.inputText.value;
+        
+        // 显示转换中状态
+        this.setPlainJoinButtonState(true);
+        
+        try {
+            // 调用文本处理器的纯文本合并方法
+            const result = TextProcessor.convertToPlainCommas(inputText);
+            
+            if (result.success) {
+                // 显示转换结果
+                this.elements.outputText.value = result.result;
+                
+                // 自动复制到剪贴板
+                await this.copyToClipboard(result.result);
+                
+                // 更新统计信息
+                this.updateStats(inputText);
+                
+            } else {
+                // 显示错误信息
+                this.elements.outputText.value = '';
+                this.showNotification(result.error, 'error');
+            }
+            
+        } catch (error) {
+            // 处理未预期的错误
+            this.elements.outputText.value = '';
+            this.showNotification('合并失败：' + error.message, 'error');
+            console.error('Plain join error:', error);
+        }
+        
+        // 恢复按钮状态
+        this.setPlainJoinButtonState(false);
     }
 
     /**
@@ -242,8 +288,18 @@ class UIController {
      */
     static setConvertButtonState(isLoading) {
         this.elements.convertBtn.disabled = isLoading;
-        this.elements.convertBtn.textContent = isLoading ? '转换中...' : '📋 Convert & Copy';
+        this.elements.convertBtn.textContent = isLoading ? '转换中...' : '📋 SQL Quote & Copy';
         this.elements.convertBtn.classList.toggle('loading', isLoading);
+    }
+
+    /**
+     * 设置纯文本合并按钮状态
+     * @param {boolean} isLoading - 是否正在加载
+     */
+    static setPlainJoinButtonState(isLoading) {
+        this.elements.plainJoinBtn.disabled = isLoading;
+        this.elements.plainJoinBtn.textContent = isLoading ? '合并中...' : '📝 Plain Join & Copy';
+        this.elements.plainJoinBtn.classList.toggle('loading', isLoading);
     }
 
     /**

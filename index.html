@@ -22,7 +22,7 @@
                 <textarea 
                     id="input-text" 
                     data-testid="input-textarea"
-                    placeholder="Enter text lines here...&#10;Each line will be converted to quoted format&#10;&#10;Example:&#10;odb581Wb5zJ2dUqRaS9OpJwps6Rw&#10;odb581cB0lSbJkWgKAxpXrrnmBO4"
+                    placeholder="Enter text lines here...&#10;&#10;SQL Quote: Adds quotes → 'line1','line2'&#10;Plain Join: Simple merge → line1,line2&#10;&#10;Example:&#10;odb581Wb5zJ2dUqRaS9OpJwps6Rw&#10;odb581cB0lSbJkWgKAxpXrrnmBO4"
                     rows="8"
                 ></textarea>
                 <div class="input-stats" id="input-stats">
@@ -37,7 +37,15 @@
                     class="btn-primary"
                     type="button"
                 >
-                    📋 Convert & Copy
+                    📋 SQL Quote & Copy
+                </button>
+                <button 
+                    id="plain-join-btn" 
+                    data-testid="plain-join-button"
+                    class="btn-primary"
+                    type="button"
+                >
+                    📝 Plain Join & Copy
                 </button>
                 <button 
                     id="clear-btn" 

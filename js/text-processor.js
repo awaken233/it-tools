@@ -67,6 +67,58 @@ class TextProcessor {
     }
 
     /**
+     * 将多行文本转换为纯文本逗号分隔格式
+     * @param {string} inputText - 输入的多行文本
+     * @returns {Object} 转换结果对象 {success: boolean, result: string, error?: string, stats: Object}
+     */
+    static convertToPlainCommas(inputText) {
+        try {
+            // 输入验证
+            const validation = this.validateInput(inputText);
+            if (!validation.isValid) {
+                return {
+                    success: false,
+                    result: '',
+                    error: validation.message,
+                    stats: this.getStats('')
+                };
+            }
+
+            // 处理文本转换
+            const lines = inputText
+                .split('\n')
+                .map(line => line.trim())
+                .filter(line => line.length > 0); // 过滤空行
+
+            if (lines.length === 0) {
+                return {
+                    success: false,
+                    result: '',
+                    error: '没有有效的文本行',
+                    stats: this.getStats('')
+                };
+            }
+
+            // 直接用逗号连接，不添加引号
+            const result = lines.join(',');
+
+            return {
+                success: true,
+                result: result,
+                stats: this.getStats(inputText)
+            };
+
+        } catch (error) {
+            return {
+                success: false,
+                result: '',
+                error: `处理错误: ${error.message}`,
+                stats: this.getStats('')
+            };
+        }
+    }
+
+    /**
      * 验证输入文本
      * @param {string} text - 待验证的文本
      * @returns {Object} 验证结果 {isValid: boolean, message?: string}
