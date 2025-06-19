@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SQL Quote Tool - Convert text lines to SQL quoted format">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';">
+    <title>SQL Quote Tool</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <h1>SQL Quote Tool</h1>
+            <p>Convert text lines to SQL quoted format</p>
+        </header>
+        
+        <main class="app-main">
+            <div class="input-section">
+                <label for="input-text">Input Text</label>
+                <textarea 
+                    id="input-text" 
+                    data-testid="input-textarea"
+                    placeholder="Enter text lines here...&#10;Each line will be converted to quoted format&#10;&#10;Example:&#10;odb581Wb5zJ2dUqRaS9OpJwps6Rw&#10;odb581cB0lSbJkWgKAxpXrrnmBO4"
+                    rows="8"
+                ></textarea>
+                <div class="input-stats" id="input-stats">
+                    Lines: 0 | Characters: 0
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button 
+                    id="convert-btn" 
+                    data-testid="convert-button"
+                    class="btn-primary"
+                    type="button"
+                >
+                    Convert to SQL
+                </button>
+                <button 
+                    id="clear-btn" 
+                    data-testid="clear-button"
+                    class="btn-secondary"
+                    type="button"
+                >
+                    Clear All
+                </button>
+            </div>
+            
+            <div class="output-section">
+                <label for="output-text">SQL Quoted Output</label>
+                <textarea 
+                    id="output-text" 
+                    data-testid="output-textarea"
+                    readonly
+                    rows="6"
+                    placeholder="Converted SQL quoted text will appear here..."
+                ></textarea>
+                <button 
+                    id="copy-btn" 
+                    data-testid="copy-button"
+                    class="btn-copy"
+                    type="button"
+                    disabled
+                >
+                    📋 Copy Result
+                </button>
+            </div>
+        </main>
+        
+        <div id="notification" class="notification" role="alert" aria-live="polite"></div>
+        
+        <footer class="app-footer">
+            <p>Made with ❤️ for SQL developers | 
+            <a href="https://github.com/your-username/it-tools" target="_blank" rel="noopener">View on GitHub</a>
+            </p>
+        </footer>
+    </div>
+    
+    <script src="js/text-processor.js"></script>
+    <script src="js/ui-controller.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html> 
